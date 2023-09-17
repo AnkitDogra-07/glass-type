@@ -84,7 +84,7 @@ st.sidebar.subheader("Scatter Plot")
 # Add a multiselect in the sidebar with the 'Select the x-axis values:' label
 # and pass all the 9 features as a tuple i.e. ('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe') as options.
 # Store the current value of this widget in the 'features_list' variable.
-features_list = st.sidebar.multiselect('Select the x-axis values:' , ('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'))
+features_list = st.sidebar.multiselect('Select the x-axis values:' , ('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'), key="feature_multiselect")
 # S6.2: Create scatter plots between the features and the target variable.
 # Remove deprecation warning.
 st.set_option('deprecation.showPyplotGlobalUse', False)
@@ -97,7 +97,7 @@ for i in features_list:
 # Sidebar for histograms.
 st.sidebar.subheader("Histogram")
 # Choosing features for histograms.
-hist_features = st.sidebar.multiselect('Select the x-axis values:' , ('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'))
+hist_features = st.sidebar.multiselect('Select the x-axis values:' , ('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'), key="hist_multiselect")
 # Create histograms.
 for i in hist_features:
   st.subheader(f"Histogram for {i}")
@@ -108,7 +108,7 @@ for i in hist_features:
 # Sidebar for box plots.
 st.sidebar.subheader("Boxplot")
 # Choosing columns for box plots.
-box_features = st.sidebar.multiselect('Select the x-axis values:' , ('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'))
+box_features = st.sidebar.multiselect('Select the x-axis values:' , ('RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'), key="box_multiselect")
 # Create box plots.
 for i in box_features:
   st.subheader(f"Boxplot for {i}")
