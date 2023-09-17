@@ -9,7 +9,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import plot_confusion_matrix, plot_roc_curve, plot_precision_recall_curve
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import RocCurveDisplay, PrecisionRecallDisplay
 from sklearn.metrics import precision_score, recall_score 
 
 # ML classifier Python modules
@@ -18,7 +19,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 
 # Loading the dataset.
-@st.cache()
+@st.cache_data()
 def load_data():
     file_path = "glass-types.csv"
     df = pd.read_csv(file_path, header = None)
@@ -45,7 +46,7 @@ y = glass_df['GlassType']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 42)
 # S3.1: Create a function that accepts an ML model object say 'model' and the nine features as inputs 
 # and returns the glass type.
-@st.cache()
+@st.cache_data()
 def pred_function(mod_nam , ri , na , mg , al , si , k , ca , ba , fe):
   glass_type = mod_nam.predict([[ri , na , mg , al , si , k , ca , ba , fe]])
   glass_type = glass_type[0]
