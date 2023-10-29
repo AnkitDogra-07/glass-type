@@ -23,15 +23,12 @@ from sklearn.linear_model import LogisticRegression
 def load_data():
     file_path = "glass-types.csv"
     df = pd.read_csv(file_path, header = None)
-    # Dropping the 0th column as it contains only the serial numbers.
     df.drop(columns = 0, inplace = True)
     column_headers = ['RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe', 'GlassType']
     columns_dict = {}
-    # Renaming columns with suitable column headers.
     for i in df.columns:
-        columns_dict[i] = column_headers[i - 1]
-        # Rename the columns.
-        df.rename(columns_dict, axis = 1, inplace = True)
+      columns_dict[i] = column_headers[i - 1]
+    df.rename(columns_dict, axis = 1, inplace = True)
     return df
 
 glass_df = load_data() 
@@ -44,8 +41,8 @@ y = glass_df['GlassType']
 
 # Spliting the data into training and testing sets.
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 42)
-# S3.1: Create a function that accepts an ML model object say 'model' and the nine features as inputs 
-# and returns the glass type.
+
+
 @st.cache_data()
 def pred_function(mod_nam , ri , na , mg , al , si , k , ca , ba , fe):
   glass_type = mod_nam.predict([[ri , na , mg , al , si , k , ca , ba , fe]])
