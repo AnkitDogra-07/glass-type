@@ -8,7 +8,6 @@ The Streamlit Glass Type Predictor is a web application that allows users to exp
 - [Features](#features)
 - [Machine Learning Models](#machine-learning-models)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Prerequisites
 
