@@ -1,7 +1,3 @@
-# S2.1: Open Sublime text editor, create a new Python file, copy the following code in it and save it as 'glass_type_app.py'.
-# You have already created this ML model in ones of the previous classes.
-
-# Importing the necessary Python modules.
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -42,12 +38,13 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, rando
 
 # Creating a function for glass type prediction
 @st.cache_data()
-def pred_function(mod_nam , ri , na , mg , al , si , k , ca , ba , fe):
+def pred_function(_mod_nam , ri , na , mg , al , si , k , ca , ba , fe):
   # Using the provided feature values to make predictions
-  glass_type = mod_nam.predict([[ri , na , mg , al , si , k , ca , ba , fe]])
-  glass_type = glass_type[0]
+  features = [[ri, na, mg, al, si, k, ca, ba, fe]]
+  glass_type = _mod_nam.predict(features)[0]
+  glass_type = glass_type
   if glass_type == 1:
-    return "building windows float processed"
+    return " Building windows float processed"
 
   elif glass_type == 2:
     return "building windows non float processed"
@@ -137,18 +134,15 @@ if st.sidebar.button("Predict Glass Type"):
 
   # Getting the selected classifier based on the user's choice.
   selected_classifier = models.get(selected_model)
+  # Fit the selected model on the training data
+  selected_classifier.fit(X_train, y_train)
 
-  # Checking if the user has selected a classifier and has provided input features
-  if selected_classifier and ri and na and mg and al and si and k and ca and ba and fe:
-      # Fit the selected model on the training data
-      selected_classifier.fit(X_train, y_train)
-
-      # Use the selected model to make a glass type prediction
-      glass_type_prediction = pred_function(selected_classifier, ri, na, mg, al, si, k, ca, ba, fe)
+  # Use the selected model to make a glass type prediction
+  glass_type_prediction = pred_function(selected_classifier, ri, na, mg, al, si, k, ca, ba, fe)
 
   # Display the glass type prediction
   st.subheader("Glass Type Prediction")
   if glass_type_prediction:
-      st.write(f"The predicted glass type is: {glass_type_prediction}")
+      st.write(f"**The predicted glass type is** {glass_type_prediction}")
   else:
-      st.write("Please select a model and provide input feature values to make a prediction.")
+      st.write("**Please select a model and provide input feature values to make a prediction.**")
