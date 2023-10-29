@@ -124,14 +124,31 @@ ca = st.sidebar.number_input("Calcium (Ca)", value=0.0, step=0.01)
 ba = st.sidebar.number_input("Barium (Ba)", value=0.0, step=0.01)
 fe = st.sidebar.number_input("Iron (Fe)", value=0.0, step=0.01)
 
-# Creating an empty placeholder to display the glass type prediction
-glass_type_prediction = ""
+if st.sidebar.button("Predict Glass Type"):
+  # Creating an empty placeholder to display the glass type prediction
+  glass_type_prediction = ""
 
-# A dictionary to map model names to their corresponding classifiers
-models = {
-    "Support Vector Machine (SVM)": SVC(),
-    "Random Forest": RandomForestClassifier(),
-    "Logistic Regression": LogisticRegression()
-}
+  # A dictionary to map model names to their corresponding classifiers
+  models = {
+      "Support Vector Machine (SVM)": SVC(),
+      "Random Forest": RandomForestClassifier(),
+      "Logistic Regression": LogisticRegression()
+  }
 
-# Getting the selected classifier based on the user's choice.
+  # Getting the selected classifier based on the user's choice.
+  selected_classifier = models.get(selected_model)
+
+  # Checking if the user has selected a classifier and has provided input features
+  if selected_classifier and ri and na and mg and al and si and k and ca and ba and fe:
+      # Fit the selected model on the training data
+      selected_classifier.fit(X_train, y_train)
+
+      # Use the selected model to make a glass type prediction
+      glass_type_prediction = pred_function(selected_classifier, ri, na, mg, al, si, k, ca, ba, fe)
+
+  # Display the glass type prediction
+  st.subheader("Glass Type Prediction")
+  if glass_type_prediction:
+      st.write(f"The predicted glass type is: {glass_type_prediction}")
+  else:
+      st.write("Please select a model and provide input feature values to make a prediction.")
